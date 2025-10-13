@@ -7,13 +7,6 @@ using System.Threading.Tasks;
 
 namespace JokeanAPI1Models
 {
-    public enum RolUsuario
-    {
-        Cliente =1,
-        Transportista=2,
-        Administrador=3
-
-    }
     [Table("dbo.Usuario")]
     public class Usuario
     {
@@ -25,7 +18,7 @@ namespace JokeanAPI1Models
         public string telefono { get; set; } = string.Empty;
         public string? correo { get; set; }
         public string direccion { get; set; } = string.Empty;
-        public RolUsuario Rol {  get; set; }
+        public Rol rol {  get; set; }
     }
 
     

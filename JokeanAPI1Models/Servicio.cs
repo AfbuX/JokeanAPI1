@@ -8,16 +8,7 @@ using System.Threading.Tasks;
 namespace JokeanAPI1Models
 
 {
-    public enum EstadoServicio
-    {
-        Pendiente = 1,
-        Aceptado = 2,
-        Rechazado = 3,
-        EnCurso=4,
-        Finalizado=5,
-        Cancelado=6
-
-    }
+   
     [Table("dbo.Servicio")]
     public class Servicio
     {
