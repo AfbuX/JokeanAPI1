@@ -13,4 +13,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JokeanAPI1Models\JokeanAPI1Models.csproj" />
+  </ItemGroup>
+
 </Project>
