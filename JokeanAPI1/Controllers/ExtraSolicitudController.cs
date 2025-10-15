@@ -1,7 +1,5 @@
 ﻿using JokeanAPI1Models;
-using JokeanAPI1Repository.Implements;
 using JokeanAPI1Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JokeanAPI1.Controllers

@@ -39,5 +39,16 @@ namespace JokeanAPI1Repository.Implements
                 throw;
             }
         }
+
+        public async Task<IEnumerable<Usuario>> Get(int Id)
+        {
+            try
+            {
+                string sql = $"SELECT * FROM Usuario WHERE id ={Id}";
+                var rs = await _db.QueryAsync<Usuario>(sql);
+                return rs;
+            }
+            catch (Exception) { throw; }
+        }
     }
 }
