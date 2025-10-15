@@ -39,7 +39,7 @@ namespace JokeanAPI1.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> Crear([FromBody]Usuario us)
+        public async Task<ActionResult> Crear([FromBody] Usuario us)
         {
             try
             {
@@ -49,13 +49,13 @@ namespace JokeanAPI1.Controllers
 
             }
             catch (Exception ex) {
-                _logger.LogError(ex,"usuario no se pudo crear correctamente");
+                _logger.LogError(ex, "usuario no se pudo crear correctamente");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
         }
-        [HttpDelete]
-        public async Task<IActionResult> BorrarServicio([FromBody] int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> BorrarServicio(int id)
         {
             try
             {
@@ -67,6 +67,38 @@ namespace JokeanAPI1.Controllers
             {
                 _logger.LogError($"no se pudo eliminar {id}");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> ActualizarUsuario(Usuario usuario)
+        {
+            try
+            {
+                _logger.LogInformation("Se esta actualizando el usuario");
+                var rs = await _usuarioRepository.Update(usuario);
+                return Ok(rs);
+
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"no se pudo actualizar el usuario {usuario.nombre}");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Buscando usuario con id = {id}");
+                var rs = await _usuarioQueries.Get(id);
+                return Ok(rs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Algo salio mal por favor intente más tarder");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

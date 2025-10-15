@@ -5,5 +5,7 @@ namespace JokeanAPI1Repository.Interfaces
     public interface IUsuarioRepository
     {
         Task<Usuario> Add(Usuario usuario);
+
+        Task<Usuario> Update(Usuario usuario);
     }
 }

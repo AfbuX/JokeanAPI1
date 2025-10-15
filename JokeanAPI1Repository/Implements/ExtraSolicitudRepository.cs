@@ -14,10 +14,11 @@ namespace JokeanAPI1Repository.Implements
     {
         private readonly IDbConnection _db;
 
-        public ExtraSolicitudRepository(IDbConnection db) { 
-        
-        _db = db ?? throw new ArgumentNullException(nameof(db));
-        
+        public ExtraSolicitudRepository(IDbConnection db)
+        {
+
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+
         }
 
         public async Task<ExtraSolicitud> Add(ExtraSolicitud extraSolicitud)
@@ -27,10 +28,12 @@ namespace JokeanAPI1Repository.Implements
                 extraSolicitud.id = await _db.InsertAsync(extraSolicitud);
                 return extraSolicitud;
             }
-            catch (Exception ) { 
-            
-            throw;
-            
+            catch (Exception)
+            {
+
+                throw;
+
             }
+        }
     }
 }
