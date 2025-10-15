@@ -6,5 +6,7 @@ namespace JokeanAPI1Repository.Interfaces
     {
         Task<IEnumerable<Usuario>> GetAll();
         Task Delete(int id);
+
+        Task<IEnumerable<Usuario>> Get(int id);
     }
 }
