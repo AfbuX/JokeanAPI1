@@ -10,5 +10,6 @@ namespace JokeanAPI1Repository.Interfaces
     public interface ISolicitudServicioQueries
     {
         Task<IEnumerable<SolicitudServicio>> GetAll();
+
     }
 }

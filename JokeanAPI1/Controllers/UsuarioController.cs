@@ -121,13 +121,13 @@ namespace JokeanAPI1.Controllers
         {
             try
             {
-                _logger.LogInformation($"Actualizando usuario ID: {usuario.Id}");
+                _logger.LogInformation($"Actualizando usuario ID: {usuario.id}");
                 var rs = await _usuarioRepository.Update(usuario);
                 return Ok(rs);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error al actualizar usuario ID: {usuario.Id}");
+                _logger.LogError(ex, $"Error al actualizar usuario ID: {usuario.id}");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

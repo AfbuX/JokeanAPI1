@@ -10,5 +10,6 @@ namespace JokeanAPI1Repository.Interfaces
     public interface IServicioRepository
     {
         Task<Servicio> Add(Servicio servicio);
+        Task<bool> Update(Servicio servicio);
     }
 }
