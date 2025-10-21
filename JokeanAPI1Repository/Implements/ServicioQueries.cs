@@ -52,5 +52,37 @@ namespace JokeanAPI1Repository.Implements
                 throw;
             }
         }
+
+        public async Task<bool> Update(Servicio servicio)
+        {
+            try
+            {
+                const string sql = @"UPDATE Servicio SET 
+                                    transportistaid = @transportistaid, 
+                                    solicitudservicioid = @solicitudservicioid, 
+                                    fechaServicio = @fechaServicio, 
+                                    estado = @estado, 
+                                    valor = @valor 
+                                    WHERE id = @id";
+                var parameters = new
+                {
+                    servicio.id,
+                    servicio.transportistaid,
+                    servicio.solicitudservicioid,
+                    servicio.fechaServicio,
+                    servicio.estado,
+                    servicio.valor
+                };
+                var result = await _db.ExecuteAsync(sql, parameters);
+                return result > 0;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            throw new NotImplementedException();
+        }
     }
 }
