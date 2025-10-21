@@ -5,21 +5,21 @@ using System.Data;
 
 namespace JokeanAPI1Repository.Implements
 {
-    public class ServicioRepository : IServicioRepository
+    public class UbicacionActualRepository : IUbicacionActualRepository
     {
         private readonly IDbConnection _db;
 
-        public ServicioRepository(IDbConnection db)
+        public UbicacionActualRepository(IDbConnection db)
         {
-            _db = db ?? throw new ArgumentNullException(nameof(db));
+            _db = db ?? throw new ArgumentException(nameof(db));
         }
 
-        public async Task<Servicio> Add(Servicio servicio)
+        public async Task<UbicacionActual> Add(UbicacionActual ubicacionActual)
         {
             try
             {
-                servicio.id = await _db.InsertAsync(servicio);
-                return servicio;
+                ubicacionActual.id = await _db.InsertAsync(ubicacionActual);
+                return ubicacionActual;
             }
             catch (Exception)
             {
@@ -27,11 +27,11 @@ namespace JokeanAPI1Repository.Implements
             }
         }
 
-        public async Task<bool> Update(Servicio servicio)
+        public async Task<bool> Update(UbicacionActual ubicacionActual)
         {
             try
             {
-                return await _db.UpdateAsync(servicio);
+                return await _db.UpdateAsync(ubicacionActual);
             }
             catch (Exception)
             {
