@@ -12,9 +12,10 @@ namespace JokeanAPI1Models
     {
         [Key]
         public int id { get; set; }
-        public int uduarioid { get; set; } 
+        public int usuarioId { get; set; } 
         public decimal latitud {  get; set; }
         public decimal longitud { get; set; }
+        public DateTime fecha { get; set; } = DateTime.UtcNow;
 
     }
 }
