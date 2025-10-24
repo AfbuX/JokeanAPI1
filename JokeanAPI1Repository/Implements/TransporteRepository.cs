@@ -28,5 +28,10 @@ namespace JokeanAPI1Repository.Implements
             }
             catch (Exception) { throw; }
         }
+
+        public Task Add(TipoTransporte tipotransporte)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
