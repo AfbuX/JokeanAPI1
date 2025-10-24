@@ -21,7 +21,12 @@ namespace JokeanAPI1.Controllers
             _usuarioRepository = usuarioRepository ?? throw new ArgumentNullException(nameof(usuarioRepository));
 
         }
-
+        /// <summary>
+        /// Lista todos usuarios en base de datos.
+        /// </summary>
+        /// <returns>Me retorna una lista de Usuarios.</returns>}
+        /// <response code = "200">La peticion fue exitosa</response>
+        /// <response code = "500">La peticion fallo</response>
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
@@ -38,6 +43,12 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        /// <summary>
+        /// Crea un Usuario nuevo en base de datos.
+        /// </summary>
+        /// <param name="CrearUsuario"></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
+        /// <response code = "200">Se creo de forma correcta</response>
         [HttpPost]
         public async Task<ActionResult> Crear([FromBody] Usuario us)
         {
@@ -54,6 +65,13 @@ namespace JokeanAPI1.Controllers
             }
 
         }
+        /// <summary>
+        /// Elimina un usuario en base de datos
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
+        /// <response code = "200"> El usuario se elimino con exito</response>
+        /// <response code = "500">El usuario no se pudo iliminar</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> BorrarServicio(int id)
         {
@@ -69,6 +87,11 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }
+        /// <summary>
+        /// Actualiza el Usuario en base de datos
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpPut]
         public async Task<IActionResult> ActualizarUsuario(Usuario usuario)
         {
@@ -86,6 +109,11 @@ namespace JokeanAPI1.Controllers
 
             }
         }
+        /// <summary>
+        /// Lista un usuario segun su id.
+        /// </summary>
+        /// <param name="id">id del usuario que se quiere listar</param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

@@ -1,12 +1,7 @@
 ﻿using Dapper;
 using JokeanAPI1Models;
 using JokeanAPI1Repository.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JokeanAPI1Repository.Implements
 {
@@ -24,7 +19,7 @@ namespace JokeanAPI1Repository.Implements
         {
             try
             {
-                string sql = "SELECT * FROM Servico";
+                string sql = "SELECT * FROM Servicio";
                 var rs = await _db.QueryAsync<Servicio>(sql);
                 return rs;
             }
