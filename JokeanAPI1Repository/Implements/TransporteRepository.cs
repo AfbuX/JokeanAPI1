@@ -10,31 +10,23 @@ using System.Threading.Tasks;
 
 namespace JokeanAPI1Repository.Implements
 {
-    public class ExtraSolicitudRepository : IExtraSolicitudRepository
+    public class TransporteRepository : ITransporteRepository
     {
         private readonly IDbConnection _db;
-
-        public ExtraSolicitudRepository(IDbConnection db)
+        public TransporteRepository(IDbConnection db)
         {
 
             _db = db ?? throw new ArgumentNullException(nameof(db));
-
         }
 
-        public async Task<ExtraSolicitud> Add(ExtraSolicitud extraSolicitud)
+        public async Task<Transporte> Add(Transporte transporte)
         {
             try
             {
-                extraSolicitud.id = await _db.InsertAsync(extraSolicitud);
-                return extraSolicitud;
+                transporte.id = await _db.InsertAsync(transporte);
+                return transporte;
             }
-            catch (Exception)
-            {
-
-                throw;
-
-            }
+            catch (Exception) { throw; }
         }
     }
-
 }

@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace JokeanAPI1Repository.Interfaces
 {
-    public interface IServicioQueries
+    public interface IMetododePagoQueries
     {
-        Task<IEnumerable<Servicio>> GetAll();
-        Task<Servicio?> Get(int id);
-        Task<bool> Update(Servicio servicio);
-        Task Delete(int id);
+        Task<IEnumerable<MetodoPago>> GetAll();
     }
 }
+

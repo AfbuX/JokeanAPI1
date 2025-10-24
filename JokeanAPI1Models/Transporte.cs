@@ -13,7 +13,7 @@ namespace JokeanAPI1Models
     {
         [Key]
         public int id {  get; set; }
-        public int transpoprteit { get; set; }
+        public int tipotransporteid { get; set; }
         public int usuarioid { get; set; }
         public string matricula { get; set; } = string.Empty;
         public int capacidad { get; set; }

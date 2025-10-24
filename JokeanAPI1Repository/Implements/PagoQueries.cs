@@ -1,4 +1,4 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
 using JokeanAPI1Models;
 using JokeanAPI1Repository.Interfaces;
 using System;
@@ -10,31 +10,25 @@ using System.Threading.Tasks;
 
 namespace JokeanAPI1Repository.Implements
 {
-    public class ExtraSolicitudRepository : IExtraSolicitudRepository
+    public class PagoQueries : IPagoQueries
     {
         private readonly IDbConnection _db;
-
-        public ExtraSolicitudRepository(IDbConnection db)
+        public PagoQueries(IDbConnection db)
         {
 
             _db = db ?? throw new ArgumentNullException(nameof(db));
 
         }
 
-        public async Task<ExtraSolicitud> Add(ExtraSolicitud extraSolicitud)
+        public async Task<IEnumerable<Pago>> GetAll()
         {
             try
             {
-                extraSolicitud.id = await _db.InsertAsync(extraSolicitud);
-                return extraSolicitud;
+                string sql = "SELECT * FROM Pago;";
+                var rs = await _db.QueryAsync<Pago>(sql);
+                return rs;
             }
-            catch (Exception)
-            {
-
-                throw;
-
-            }
+            catch (Exception) { throw; }
         }
     }
-
 }

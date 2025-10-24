@@ -1,11 +1,12 @@
 ﻿using JokeanAPI1Models;
-using JokeanAPI1Repository.Implements;
 using JokeanAPI1Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JokeanAPI1.Controllers
 {
+    /// <summary>
+    /// Controlador para la gestión de usuarios en el sistema.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -14,12 +15,17 @@ namespace JokeanAPI1.Controllers
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly ILogger<UsuarioController> _logger;
 
-        public UsuarioController(IUsuarioQueries usuarioQueries, ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
+        /// <summary>
+        /// Constructor del controlador de usuarios.
+        /// </summary>
+        public UsuarioController(
+            IUsuarioQueries usuarioQueries, 
+            ILogger<UsuarioController> logger, 
+            IUsuarioRepository usuarioRepository)
         {
             _usuarioQueries = usuarioQueries ?? throw new ArgumentNullException(nameof(usuarioQueries));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _usuarioRepository = usuarioRepository ?? throw new ArgumentNullException(nameof(usuarioRepository));
-
         }
         /// <summary>
         /// Lista todos usuarios en base de datos.
@@ -28,18 +34,19 @@ namespace JokeanAPI1.Controllers
         /// <response code = "200">La peticion fue exitosa</response>
         /// <response code = "500">La peticion fallo</response>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Usuario>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Listar()
         {
             try
             {
-                _logger.LogInformation("Consultado todos los usuarios");
+                _logger.LogInformation("Consultando todos los usuarios");
                 var rs = await _usuarioQueries.GetAll();
                 _logger.LogTrace(rs.ToString());
                 return Ok(rs);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Algo salio mal");
+                _logger.LogError(ex, "Error al consultar usuarios");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -50,20 +57,21 @@ namespace JokeanAPI1.Controllers
         /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         /// <response code = "200">Se creo de forma correcta</response>
         [HttpPost]
-        public async Task<ActionResult> Crear([FromBody] Usuario us)
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Crear([FromBody] Usuario usuario)
         {
             try
             {
-                _logger.LogInformation("Creando Usuario nuevo");
-                var rs = await _usuarioRepository.Add(us);
+                _logger.LogInformation("Creando nuevo usuario");
+                var rs = await _usuarioRepository.Add(usuario);
                 return Ok(rs);
-
             }
-            catch (Exception ex) {
-                _logger.LogError(ex, "usuario no se pudo crear correctamente");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear usuario");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
         }
         /// <summary>
         /// Elimina un usuario en base de datos
@@ -73,18 +81,20 @@ namespace JokeanAPI1.Controllers
         /// <response code = "200"> El usuario se elimino con exito</response>
         /// <response code = "500">El usuario no se pudo iliminar</response>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> BorrarServicio(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> BorrarUsuario(int id)
         {
             try
             {
-                _logger.LogInformation("Borrando Usuario");
+                _logger.LogInformation($"Eliminando usuario con ID: {id}");
                 await _usuarioQueries.Delete(id);
-                return Ok("Usuario elimando");
+                return Ok("Usuario eliminado exitosamente");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"no se pudo eliminar {id}");
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                _logger.LogError(ex, $"Error al eliminar usuario con ID: {id}");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
         /// <summary>
@@ -93,20 +103,21 @@ namespace JokeanAPI1.Controllers
         /// <param name=""></param>
         /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpPut]
-        public async Task<IActionResult> ActualizarUsuario(Usuario usuario)
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ActualizarUsuario([FromBody] Usuario usuario)
         {
             try
             {
-                _logger.LogInformation("Se esta actualizando el usuario");
+                _logger.LogInformation($"Actualizando usuario ID: {usuario.id}");
                 var rs = await _usuarioRepository.Update(usuario);
                 return Ok(rs);
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _logger.LogError($"no se pudo actualizar el usuario {usuario.nombre}");
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
-
+                _logger.LogError(ex, $"Error al actualizar usuario ID: {usuario.id}");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
         /// <summary>
@@ -115,21 +126,26 @@ namespace JokeanAPI1.Controllers
         /// <param name="id">id del usuario que se quiere listar</param>
         /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                _logger.LogInformation($"Buscando usuario con id = {id}");
+                _logger.LogInformation($"Buscando usuario con ID: {id}");
                 var rs = await _usuarioQueries.Get(id);
+                if (rs == null)
+                {
+                    return NotFound($"Usuario con ID {id} no encontrado");
+                }
                 return Ok(rs);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Algo salio mal por favor intente más tarder");
+                _logger.LogError(ex, $"Error al buscar usuario con ID: {id}");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
-
-    }
+}
 
