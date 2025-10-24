@@ -29,5 +29,17 @@ namespace JokeanAPI1Repository.Implements
                 throw;
             }
         }
+
+        public async Task<Usuario> Update(Usuario usuario)
+        {
+            try
+            {
+                var rs = await _db.UpdateAsync<Usuario>(usuario);
+                return usuario;
+            }
+            catch (Exception){ 
+            
+            throw; }
+        }
     }
 }

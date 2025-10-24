@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace JokeanAPI1Repository.Interfaces
 {
-    public interface ISolicitudServicioQueries
+    public interface IUbicacionActualQueries
     {
-        Task<IEnumerable<SolicitudServicio>> GetAll();
-
+        Task<IEnumerable<UbicacionActual>> GetAll();
+        Task<UbicacionActual?> Get(int id);
+        Task<bool> Update(UbicacionActual ubicacion);
     }
 }
