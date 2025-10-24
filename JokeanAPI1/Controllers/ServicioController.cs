@@ -14,8 +14,7 @@ namespace JokeanAPI1.Controllers
         private readonly IServicioRepository _servicioRepository;
         private readonly IServicioQueries _servicioQueries;
         private readonly ILogger<ServicioController> _logger;
-        public ServicioController(ILogger<ServicioController> logger, IServicioQueries servicioQueries, IServicioRepository servicioRepository)
-        {
+        
 
         /// <summary>
         /// Constructor del controlador de servicios.

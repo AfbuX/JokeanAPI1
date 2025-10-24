@@ -34,7 +34,7 @@ namespace JokeanAPI1Repository.Implements
                 (
                  reTipoTransporte.Transporte = Transporte;
                 return TipoTransporte;
-            }, splitOn: "Id");
+            , splitOn: "Id");
                 
             return rs;
             }

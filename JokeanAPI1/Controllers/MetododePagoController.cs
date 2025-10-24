@@ -1,11 +1,83 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using JokeanAPI1Models;
+using JokeanAPI1Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JokeanAPI1.Controllers
 {
+    /// <summary>
+    /// Controlador para gestionar los metodos de pago de los servicios.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+
     public class MetododePagoController : ControllerBase
     {
+        private readonly IMetododePagoQueries _metododePagoQueries;
+        private readonly IMetododePagoRepository _metododePagoRepository;
+        private readonly ILogger<MetododePagoController> _logger;
+
+        /// <summary>
+        /// Constructor del controlador de metodos de pagos.
+        /// </summary>
+        public MetododePagoController(
+            ILogger<MetododePagoController> logger,
+            IMetododePagoRepository metododePagoRepository,
+            IMetododePagoQueries metododePagoQueries)
+        {
+            _metododePagoQueries = metododePagoQueries ?? throw new ArgumentNullException(nameof(metododePagoQueries));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _metododePagoRepository = metododePagoRepository ?? throw new ArgumentNullException(nameof(metododePagoRepository));
+        }
+
+        /// <summary>
+        /// Obtiene todas los metodos de pago registradss.
+        /// </summary>
+        /// <returns>Lista de metodos de pagos existentes en el sistema.</returns>
+        /// <response code="200">Retorna la lista de metodos de pagos.</response>
+        /// <response code="500">Error interno del servidor.</response>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<MetodoPago>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Listar()
+        {
+            try
+            {
+                _logger.LogInformation("Consultando Metodos de Pago");
+                var rs = await _metododePagoQueries.GetAll();
+                _logger.LogTrace(rs.ToString());
+                return Ok(rs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al consultar los Metodos de Pago");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        /// <summary>
+        /// Crea un nuevo metodo de pago en el sistema.
+        /// </summary>
+        /// <param name="metododePago">Datos de los metodos de pago a crear.</param>
+        /// <returns>Metodo de pago creado con su ID asignado.</returns>
+        /// <response code="200">Retorna el metodo de pago creada exitosamente.</response>
+        /// <response code="400">Si los datos de los metodos de pago son inválidos.</response>
+        /// <response code="500">Error interno del servidor.</response>
+        [HttpPost]
+        [ProducesResponseType(typeof(MetodoPago), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Crear([FromBody] MetodoPago metodoPago)
+        {
+            try
+            {
+                _logger.LogInformation("Creando nueva Metodo de Pago");
+                var rs = await _metododePagoRepository.Add(metodoPago);
+                return Ok(rs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear el metodo de pago");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
