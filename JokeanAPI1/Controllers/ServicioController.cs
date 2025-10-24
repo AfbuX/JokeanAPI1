@@ -14,16 +14,15 @@ namespace JokeanAPI1.Controllers
         private readonly IServicioRepository _servicioRepository;
         private readonly IServicioQueries _servicioQueries;
         private readonly ILogger<ServicioController> _logger;
-        public ServicioController(ILogger<ServicioController> logger, IServicioQueries servicioQueries, IServicioRepository servicioRepository)
-        {
+        
 
         /// <summary>
         /// Constructor del controlador de servicios.
         /// </summary>
-        public ServicioController(
-            ILogger<ServicioController> logger,
-            IServicioQueries servicioQueries,
-            IServicioRepository servicioRepository)
+            public ServicioController(
+                ILogger<ServicioController> logger,
+                IServicioQueries servicioQueries,
+                IServicioRepository servicioRepository)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _servicioQueries = servicioQueries ?? throw new ArgumentNullException(nameof(servicioQueries));
@@ -37,6 +36,8 @@ namespace JokeanAPI1.Controllers
         /// <response code="500">la lista tuvo un problema en obtenerse</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Servicio>), StatusCodes.Status200OK)]
+
+
         public async Task<IActionResult> ListarServicio()
         {
             try
@@ -160,4 +161,5 @@ namespace JokeanAPI1.Controllers
             }
         }
     }
-}
+    }
+

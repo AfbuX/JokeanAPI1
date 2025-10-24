@@ -19,8 +19,8 @@ namespace JokeanAPI1.Controllers
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _tipotransporteRepository = tipotransporteRepository ?? throw new ArgumentNullException(nameof(_tipotransporteRepository));
-            //_tipotransporteRepository = tipotransporteRepository ?? throw new ArgumentNullException(nameof(tipotransporteRepository));
-            //_tipotransporteQueries = tipotransporteQueries ?? throw new ArgumentNullException(nameof(tipotransporteQueries));
+            _tipotransporteQueries = tipotransporteQueries ?? throw new ArgumentNullException(nameof(tipotransporteQueries));
+        
         }
 
         [HttpGet("vm")]
