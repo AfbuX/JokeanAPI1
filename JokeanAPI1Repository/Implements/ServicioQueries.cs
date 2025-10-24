@@ -18,8 +18,9 @@ namespace JokeanAPI1Repository.Implements
         {
             try
             {
-                const string sql = "SELECT * FROM Servicio";
-                return await _db.QueryAsync<Servicio>(sql);
+                string sql = "SELECT * FROM Servicio";
+                var rs = await _db.QueryAsync<Servicio>(sql);
+                return rs;
             }
             catch (Exception)
             {

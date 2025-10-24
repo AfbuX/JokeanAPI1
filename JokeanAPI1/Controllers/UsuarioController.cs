@@ -27,13 +27,12 @@ namespace JokeanAPI1.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _usuarioRepository = usuarioRepository ?? throw new ArgumentNullException(nameof(usuarioRepository));
         }
-
         /// <summary>
-        /// Obtiene todos los usuarios registrados en el sistema.
+        /// Lista todos usuarios en base de datos.
         /// </summary>
-        /// <returns>Lista de usuarios.</returns>
-        /// <response code="200">Retorna la lista de usuarios.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <returns>Me retorna una lista de Usuarios.</returns>}
+        /// <response code = "200">La peticion fue exitosa</response>
+        /// <response code = "500">La peticion fallo</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Usuario>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Listar()
@@ -51,15 +50,12 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Crea un nuevo usuario en el sistema.
+        /// Crea un Usuario nuevo en base de datos.
         /// </summary>
-        /// <param name="usuario">Datos del usuario a crear.</param>
-        /// <returns>Usuario creado con su ID asignado.</returns>
-        /// <response code="200">Usuario creado exitosamente.</response>
-        /// <response code="400">Datos del usuario inválidos.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <param name="CrearUsuario"></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
+        /// <response code = "200">Se creo de forma correcta</response>
         [HttpPost]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -77,15 +73,13 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Elimina un usuario del sistema.
+        /// Elimina un usuario en base de datos
         /// </summary>
-        /// <param name="id">ID del usuario a eliminar.</param>
-        /// <returns>Confirmación de la eliminación.</returns>
-        /// <response code="200">Usuario eliminado exitosamente.</response>
-        /// <response code="404">Usuario no encontrado.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <param name=""></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
+        /// <response code = "200"> El usuario se elimino con exito</response>
+        /// <response code = "500">El usuario no se pudo iliminar</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -103,16 +97,11 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Actualiza los datos de un usuario existente.
+        /// Actualiza el Usuario en base de datos
         /// </summary>
-        /// <param name="usuario">Datos actualizados del usuario.</param>
-        /// <returns>Usuario actualizado.</returns>
-        /// <response code="200">Usuario actualizado exitosamente.</response>
-        /// <response code="400">Datos del usuario inválidos.</response>
-        /// <response code="404">Usuario no encontrado.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <param name=""></param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpPut]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -131,15 +120,11 @@ namespace JokeanAPI1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Obtiene un usuario por su ID.
+        /// Lista un usuario segun su id.
         /// </summary>
-        /// <param name="id">ID del usuario a buscar.</param>
-        /// <returns>Datos del usuario.</returns>
-        /// <response code="200">Retorna el usuario solicitado.</response>
-        /// <response code="404">Usuario no encontrado.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <param name="id">id del usuario que se quiere listar</param>
+        /// <returns>Retorna un codigo de estado que indica si el resultado fue exitoso o fallo</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

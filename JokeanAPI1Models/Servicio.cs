@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace JokeanAPI1Models
 
 {
-   
+       
     [Table("dbo.Servicio")]
     public class Servicio
     {

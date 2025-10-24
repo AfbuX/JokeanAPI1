@@ -9,11 +9,13 @@ namespace JokeanAPI1.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ServicioController : ControllerBase // Cambiado de Controller a ControllerBase
+    public class ServicioController : ControllerBase
     {
         private readonly IServicioRepository _servicioRepository;
         private readonly IServicioQueries _servicioQueries;
-        private readonly ILogger<ServicioController> _logger; // Tipado el logger
+        private readonly ILogger<ServicioController> _logger;
+        public ServicioController(ILogger<ServicioController> logger, IServicioQueries servicioQueries, IServicioRepository servicioRepository)
+        {
 
         /// <summary>
         /// Constructor del controlador de servicios.
@@ -27,13 +29,12 @@ namespace JokeanAPI1.Controllers
             _servicioQueries = servicioQueries ?? throw new ArgumentNullException(nameof(servicioQueries));
             _servicioRepository = servicioRepository ?? throw new ArgumentNullException(nameof(servicioRepository));
         }
-
         /// <summary>
-        /// Obtiene todos los servicios registrados en el sistema.
+        /// Lista todos los servicios que existen en base de datos.
         /// </summary>
-        /// <returns>Lista de servicios.</returns>
-        /// <response code="200">Retorna la lista de servicios.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <returns>Retorna una lista de servicios</returns>
+        /// <response code="200">la lista se pudo enviar de forma correcta.</response>
+        /// <response code="500">la lista tuvo un problema en obtenerse</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Servicio>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListarServicio()
@@ -46,19 +47,17 @@ namespace JokeanAPI1.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al consultar servicios");
+                _logger.LogError(ex, "algo salo mal en la consulta");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Crea un nuevo servicio en el sistema.
+        /// Crea un nuevo servicio en base de datos
         /// </summary>
-        /// <param name="servicio">Datos del servicio a crear.</param>
-        /// <returns>Servicio creado con su ID asignado.</returns>
-        /// <response code="200">Servicio creado exitosamente.</response>
-        /// <response code="400">Datos del servicio inválidos.</response>
-        /// <response code="500">Error interno del servidor.</response>
+        /// <param name="CrearServicio"></param>
+        /// <returns>Retorna un codigo de estado que indica si el servicio fue creado</returns>
+        /// <response code = "200">se creo de forma correcta</response>
+        /// <response code = "500">no se pudo crear el servicio</response>
         [HttpPost]
         [ProducesResponseType(typeof(Servicio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,24 +69,20 @@ namespace JokeanAPI1.Controllers
                 var rs = await _servicioRepository.Add(servicio);
                 return Ok(rs);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al crear servicio");
+            catch (Exception ex) {
+
+                _logger.LogError(ex, "error al crear un nuevo servicio");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
         /// <summary>
-        /// Elimina un servicio del sistema.
+        /// Elimina un nuevo servicio en base de datos
         /// </summary>
-        /// <param name="id">ID del servicio a eliminar.</param>
-        /// <returns>Confirmación de la eliminación.</returns>
-        /// <response code="200">Servicio eliminado exitosamente.</response>
-        /// <response code="404">Servicio no encontrado.</response>
-        /// <response code="500">Error interno del servidor.</response>
-        [HttpDelete("{id}")] // Corregido para usar parámetro de ruta en lugar de body
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        /// <param name="DeleteServicio"></param>
+        /// <returns>Retorna un codigo de estado que indica si el servicio fue creado</returns>
+        /// <response code = "200">se elimino de forma correcta</response>
+        /// <response code = "500">no se pudo eliminar el servicio</response>
+        [HttpDelete("{id}")]
         public async Task<IActionResult> BorrarServicio(int id)
         {
             try
