@@ -35,6 +35,15 @@ namespace JokeanAPI1
             builder.Services.AddTransient<IExtraSolicitudRepository, ExtraSolicitudRepository>();
             builder.Services.AddTransient<IMetododePagoQueries, MetododePagoQueries>();
             builder.Services.AddTransient<IMetododePagoRepository, MetododePagoRepository>();
+            builder.Services.AddTransient<IPagoQueries, PagoQueries>();
+            builder.Services.AddTransient<IPagoRepository, PagoRepository>();
+            builder.Services.AddTransient<ITransporteQueries, TransporteQueries>();
+            builder.Services.AddTransient<ITransporteRepository, TransporteRepository>();
+            builder.Services.AddTransient<ITipoTransporteQueries, TipoTransporteQueries>();
+            builder.Services.AddTransient<ITipoTransporteRepository, TipoTransporteRepository>();
+            builder.Services.AddTransient<IUbicacionActualQueries, UbicacionActualQueries>();
+            builder.Services.AddTransient<IUbicacionActualRepository, UbicacionActualRepository>();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 

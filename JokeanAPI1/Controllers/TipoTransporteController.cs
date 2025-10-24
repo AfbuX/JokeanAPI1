@@ -7,20 +7,22 @@ namespace JokeanAPI1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+    ///             
+
+
     public class TipoTransporteController : ControllerBase
     {
-
         private readonly ILogger _logger;
-        private readonly ITransporteQueries _tipotransporteQueries;
-        private readonly ITransporteRepository _tipotransporteRepository;
+        private readonly ITipoTransporteQueries _tipotransporteQueries;
+        private readonly ITipoTransporteRepository _tipotransporteRepository;
 
 
         public TipoTransporteController(ILogger logger, ITipoTransporteRepository tipotransporteRepository, ITipoTransporteQueries tipotransporteQueries)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _tipotransporteRepository = tipotransporteRepository ?? throw new ArgumentNullException(nameof(_tipotransporteRepository));
+            _tipotransporteRepository = tipotransporteRepository ?? throw new ArgumentNullException(nameof(tipotransporteRepository));
             _tipotransporteQueries = tipotransporteQueries ?? throw new ArgumentNullException(nameof(tipotransporteQueries));
-        
         }
 
         [HttpGet("vm")]
@@ -30,7 +32,7 @@ namespace JokeanAPI1.Controllers
         {
             try
             {
-                _logger.LogInformation("En consulta de tipo de Transporte . . .");
+                _logger.LogInformation("En consulta de Transporte . . .");
                 var rs = await _tipotransporteQueries.GetAll();
                 return Ok(rs);
 
@@ -49,8 +51,8 @@ namespace JokeanAPI1.Controllers
         {
             try
             {
-                _logger.LogInformation("Creando un tipo de Transporte . . . ");
-                var rs = await _tipotransporteRepository.Add(transporte);
+                _logger.LogInformation("Creando 'Transporte' ");
+                var rs = await _tipotransporteRepository.Add(tipotransporte);
                 return Ok(rs);
 
             }
@@ -63,4 +65,6 @@ namespace JokeanAPI1.Controllers
         }
 
     }
+
+
 }

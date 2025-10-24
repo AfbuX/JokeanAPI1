@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JokeanAPI1.Controllers
 {
     /// <summary>
-    /// Controlador para gestionar los metodos de pago de los servicios.
+    /// Controlador para gestionar los pagos de los servicios.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -18,7 +18,7 @@ namespace JokeanAPI1.Controllers
         private readonly ILogger<PagoController> _logger;
 
         /// <summary>
-        /// Constructor del controlador de metodos de pagos.
+        /// Constructor del controlador de mpagos.
         /// </summary>
         public PagoController(
             ILogger<PagoController> logger,
@@ -31,9 +31,9 @@ namespace JokeanAPI1.Controllers
         }
 
         /// <summary>
-        /// Obtiene todas los metodos de pago registradss.
+        /// Obtiene todas los pagos registradss.
         /// </summary>
-        /// <returns>Lista de metodos de pagos existentes en el sistema.</returns>
+        /// <returns>Lista de pagos existentes en el sistema.</returns>
         /// <response code="200">Retorna la lista de metodos de pagos.</response>
         /// <response code="500">Error interno del servidor.</response>
         [HttpGet]
@@ -57,10 +57,10 @@ namespace JokeanAPI1.Controllers
         /// <summary>
         /// Crea un nuevo metodo de pago en el sistema.
         /// </summary>
-        /// <param name="Pago">Datos de los metodos de pago a crear.</param>
-        /// <returns>Metodo de pago creado con su ID asignado.</returns>
-        /// <response code="200">Retorna el metodo de pago creada exitosamente.</response>
-        /// <response code="400">Si los datos de los metodos de pago son inválidos.</response>
+        /// <param name="Pago">Datos de los pagos a crear.</param>
+        /// <returns>pago creado con su ID asignado.</returns>
+        /// <response code="200">Retorna el pago creada exitosamente.</response>
+        /// <response code="400">Si los datos del pago son inválidos.</response>
         /// <response code="500">Error interno del servidor.</response>
         [HttpPost]
         [ProducesResponseType(typeof(Pago), StatusCodes.Status200OK)]
