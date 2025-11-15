@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JokeanAPI1Repository.Interfaces;
 using JokeanAPI1Repository.ModelsVM;
+using TransporteVM = JokeanAPI1Models.TransporteVM;
 
 namespace JokeanAPI1Repository.Implements
 {
@@ -20,38 +21,73 @@ namespace JokeanAPI1Repository.Implements
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
-
-        public async Task<IEnumerable<Transporte>> GetAll()
+        public async Task<IEnumerable<TransporteVM>> GetAll()
         {
             try
             {
-                string sql = "SELECT * FROM Transporte";
-                var rs = await _db.QueryAsync<Transporte>(sql);
-                return rs;
-            }
-            catch (Exception) { throw; }
-        }
+                string sql = @"
+            SELECT 
+                tt.Id AS TipoTransporteId,
+                tt.Tipo AS TipoNombre,
+                tt.Descripcion AS TipoDescripcion,
 
-        public async Task<IEnumerable<TransporteVM>> byVM(int id)
-        {
-            try
-            {
-                string sql = "select * from TipoTransporte tt INNER JOIN Transporte ON T.tipotransporteid = tt.Id INNER JOIN Usuario ON tt.usuarioid";
-                var rs = await _db.QueryAsync<TransporteVM, Usuario, Transporte, TransporteVM>(sql, (tipotransporte, Usuario, Transporte) =>
-                {
-                    tipotransporte.usuario = Usuario;
-                    tipotransporte.transporte = Transporte;
-                    return tipotransporte;
-                }, new { Id = id }, splitOn: "id,id");
+                t.Id AS TransporteId,
+                t.Placa,
+                t.Marca,
+                t.Modelo,
+                t.Capacidad
+            FROM Transporte t
+            INNER JOIN TipoTransporte tt ON t.TipoTransporteId = tt.Id
+            ORDER BY t.Id DESC;
+        ";
 
-
-                return rs;
+                var result = await _db.QueryAsync<TransporteVM>(sql);
+                return result;
             }
             catch
             {
                 throw;
             }
         }
+
+
+
+        public async Task<IEnumerable<TransporteVM>> byVM(int id)
+        {
+            try
+            {
+                string sql = @"
+            SELECT 
+                t.Id AS TransporteId,
+                t.Placa,
+                t.Marca,
+                t.Modelo,
+                t.Capacidad,
+                t.TipoMotor,
+                t.Cilindraje,
+
+                tt.Tipo AS TipoNombre,
+
+                u.Id AS UsuarioId,
+                u.Nombre AS UsuarioNombre,
+                u.Email AS UsuarioEmail
+
+            FROM Transporte t
+            INNER JOIN TipoTransporte tt ON t.TipoTransporteId = tt.Id
+            INNER JOIN Usuario u ON t.UsuarioId = u.Id
+            WHERE t.Id = @Id;
+        ";
+
+                var result = await _db.QueryAsync<TransporteVM>(sql, new { Id = id });
+
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
     }
 

@@ -46,8 +46,23 @@ namespace JokeanAPI1
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
+            var MyCorsPolicy = "_myCorsPolicy";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyCorsPolicy,
+                builder =>
+                {
+                    builder
+                        .WithOrigins("http://localhost:5289") // Blazor puerto
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
 
             var app = builder.Build();
+            app.UseCors(MyCorsPolicy);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

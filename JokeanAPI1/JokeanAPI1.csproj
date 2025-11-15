@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\m1tri\Downloads\MIXML\MiApiXML.txt</DocumentationFile>
+    <DocumentationFile>C:\Users\Kate\Downloads\MIXML\MiApiXML.txt</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

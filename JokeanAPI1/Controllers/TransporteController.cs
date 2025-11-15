@@ -8,17 +8,18 @@ namespace JokeanAPI1.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    ///             
-
-
+    /// <summary>
+    /// Controlador para gestionar operaciones relacionadas con el recurso Transporte.
+    /// Proporciona endpoints para listar y crear entidades de Transporte.
+    /// </summary>
     public class TransporteController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<TransporteController> _logger;
         private readonly ITransporteQueries _transporteQueries;
         private readonly ITransporteRepository _transporteRepository;
 
 
-        public TransporteController(ILogger logger, ITransporteRepository transporteRepository, ITransporteQueries transporteQueries)
+        public TransporteController(ILogger<TransporteController> logger, ITransporteRepository transporteRepository, ITransporteQueries transporteQueries)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _transporteRepository = transporteRepository ?? throw new ArgumentNullException(nameof(transporteRepository));

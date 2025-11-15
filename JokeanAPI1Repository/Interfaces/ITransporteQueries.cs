@@ -9,7 +9,7 @@ namespace JokeanAPI1Repository.Interfaces
 {
     public interface ITransporteQueries
     {
-        Task<IEnumerable<Transporte>> GetAll();
+        Task<IEnumerable<TransporteVM>> GetAll();
 
     }
 }
